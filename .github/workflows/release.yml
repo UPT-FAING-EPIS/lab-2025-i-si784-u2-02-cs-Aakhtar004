@@ -1,0 +1,46 @@
+name: Generación de Package y Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 9.0.x
+          source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restaurar dependencias
+        run: dotnet restore ./PrimeService/PrimeService.sln
+
+      - name: Construir proyecto
+        run: dotnet build ./PrimeService/PrimeService.sln --configuration Release --no-restore
+
+      - name: Crear paquete NuGet
+        run: |
+          MATRICULA="2022074261"
+          VERSION=${GITHUB_REF#refs/tags/v}
+          dotnet pack ./PrimeService/Primes.Lib/Primes.Lib.csproj --configuration Release --no-build -p:PackageVersion=${MATRICULA}.${VERSION}
+
+      - name: Publicar paquete NuGet en GitHub Packages
+        run: |
+          nuget push ./PrimeService/Primes.Lib/bin/Release/*.nupkg --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+
+      - name: Crear release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            ./PrimeService/Primes.Lib/bin/Release/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

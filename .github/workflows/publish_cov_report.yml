@@ -1,0 +1,40 @@
+name: Informe de Cobertura
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v2
+
+      - name: Configurar .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Restaurar dependencias
+        run: dotnet restore ./PrimeService/PrimeService.sln
+
+      - name: Construir proyecto
+        run: dotnet build ./PrimeService/PrimeService.sln --configuration Release --no-restore
+
+      - name: Ejecutar pruebas con cobertura
+        run: dotnet test ./PrimeService/PrimeService.sln --no-build --configuration Release --collect:"XPlat Code Coverage"
+
+      - name: Instalar ReportGenerator
+        run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+      - name: Generar informe HTML
+        run: reportgenerator -reports:"./PrimeService/**/TestResults/**/coverage.cobertura.xml" -targetdir:"./coverage-report" -reporttypes:Html
+
+      - name: Publicar informe de cobertura
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./coverage-report
+          destination_dir: coverage
+          force_orphan: false

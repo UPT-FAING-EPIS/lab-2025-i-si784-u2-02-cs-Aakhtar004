@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>PrimeService</PackageId>
+    <Authors>2022074261</Authors>
+    <Company>UNMSM</Company>
+    <Description>Servicio para determinar si un número es primo.</Description>
+    <RepositoryUrl>https://github.com/si784-u2-02-cs-Aakhtar004/lab-2025-i-si784-u2-02-cs-Aakhtar004</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
