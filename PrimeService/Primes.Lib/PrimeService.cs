@@ -1,3 +1,5 @@
+using System;
+
 namespace Primes.Lib
 {
     /// <summary>
