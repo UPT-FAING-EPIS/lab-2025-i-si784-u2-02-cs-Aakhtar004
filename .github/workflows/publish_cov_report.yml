@@ -1,40 +1,39 @@
-name: Informe de Cobertura
-
-on:
-  push:
-    branches: [ main ]
+name: 3. Test unitarias y Reporte de Cobertura 
+env:
+  DOTNET_VERSION: '8.0' # la versión de .NET
+on: push
 
 jobs:
-  build:
+  test-and-publish-coverage:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout código
-        uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - name: Configurar .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 9.0.x
+    - name: Configurando la versión de NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Restaurar dependencias
-        run: dotnet restore ./PrimeService/PrimeService.sln
+    - name: Restore dependencies & Run tests with coverage
+      run: |
+        cd PrimeService
+        dotnet restore
+        dotnet test --collect:"XPlat Code Coverage"
 
-      - name: Construir proyecto
-        run: dotnet build ./PrimeService/PrimeService.sln --configuration Release --no-restore
+    - name: Install ReportGenerator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
 
-      - name: Ejecutar pruebas con cobertura
-        run: dotnet test ./PrimeService/PrimeService.sln --no-build --configuration Release --collect:"XPlat Code Coverage"
-
-      - name: Instalar ReportGenerator
-        run: dotnet tool install -g dotnet-reportgenerator-globaltool
-
-      - name: Generar informe HTML
-        run: reportgenerator -reports:"./PrimeService/**/TestResults/**/coverage.cobertura.xml" -targetdir:"./coverage-report" -reporttypes:Html
-
-      - name: Publicar informe de cobertura
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./coverage-report
-          destination_dir: coverage
-          force_orphan: false
+    - name: Generate coverage Report
+      run: |
+        cd PrimeService
+        reportgenerator "-reports:./*/*/*/coverage.cobertura.xml" "-targetdir:Cobertura" -reporttypes:HTML
+        ls Cobertura
+        
+    - name: Deploy coverage report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: PrimeService/Cobertura
+        destination_dir: Cobertura
+        keep_files: true 
