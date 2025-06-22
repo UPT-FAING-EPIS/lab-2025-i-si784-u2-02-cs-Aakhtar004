@@ -122,7 +122,7 @@ jobs:
 
         # This is the **HOMEPAGE**.
 
-        ## [Pruebas HTML](Cobertura/index.html)
+        ## [Pruebas HTML - Cobertura](Cobertura/index.html)
 
         ## [Diagrama de Clases](disenio.md)
 
