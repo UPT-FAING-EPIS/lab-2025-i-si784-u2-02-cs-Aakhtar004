@@ -2,7 +2,12 @@ name: 2. Generar Documentacion con DocFx y Publicar
 env:
   DOTNET_VERSION: '8.0' 
   DOTNET_VERSION_TOOL: '6.0' 
-on: push
+on: 
+  push
+    branches:
+        - main
+
+
 jobs:
   build-and-deploy-docs:
     runs-on: ubuntu-latest
@@ -122,7 +127,7 @@ jobs:
 
         # This is the **HOMEPAGE**.
 
-        ## [Pruebas HTML - Cobertura](../Cobertura/index.html)
+        ## [Pruebas HTML - Cobertura](Cobertura/index.html)
 
         ## [Diagrama de Clases](disenio.md)
 
@@ -136,6 +141,10 @@ jobs:
         docfx metadata docfx.json
         docfx build
     
+    - name: Copiar carpeta de cobertura al sitio
+      run: |
+        cp -R Cobertura _site/Cobertura
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
