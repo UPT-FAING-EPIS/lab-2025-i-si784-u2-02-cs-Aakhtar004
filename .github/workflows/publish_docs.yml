@@ -4,8 +4,7 @@ env:
   DOTNET_VERSION_TOOL: '6.0' 
 on: 
   push
-    branches:
-        - main
+    
 
 
 jobs:
