@@ -2,7 +2,7 @@
   "Cobertura/SummaryGithub.html": {
     "href": "Cobertura/SummaryGithub.html",
     "title": "Summary | PrimeService App",
-    "summary": "Summary Summary Generated on: 06/22/2025 - 02:20:36 Coverage date: 06/22/2025 - 02:20:35 Parser: Cobertura Assemblies: 1 Classes: 1 Files: 1 Line coverage: 100% (10 of 10) Covered lines: 10 Uncovered lines: 0 Coverable lines: 10 Total lines: 31 Branch coverage: 100% (6 of 6) Covered branches: 6 Total branches: 6 Method coverage: Feature is only available for sponsors Coverage Primes.Lib - 100% Name Line Branch Primes.Lib 100% 100% Primes.Lib.PrimeService 100% 100%"
+    "summary": "Summary Summary Generated on: 06/22/2025 - 02:28:01 Coverage date: 06/22/2025 - 02:27:59 Parser: Cobertura Assemblies: 1 Classes: 1 Files: 1 Line coverage: 100% (10 of 10) Covered lines: 10 Uncovered lines: 0 Coverable lines: 10 Total lines: 31 Branch coverage: 100% (6 of 6) Covered branches: 6 Total branches: 6 Method coverage: Feature is only available for sponsors Coverage Primes.Lib - 100% Name Line Branch Primes.Lib 100% 100% Primes.Lib.PrimeService 100% 100%"
   },
   "disenio.html": {
     "href": "disenio.html",
@@ -32,6 +32,6 @@
   "index.html": {
     "href": "index.html",
     "title": "This is the HOMEPAGE. | PrimeService App",
-    "summary": "This is the HOMEPAGE. Pruebas HTML Diagrama de Clases Pruebas Markdown Documentacion Clases, atributos y métodos"
+    "summary": "This is the HOMEPAGE. Pruebas HTML - Cobertura Diagrama de Clases Pruebas Markdown Documentacion Clases, atributos y métodos"
   }
 }
