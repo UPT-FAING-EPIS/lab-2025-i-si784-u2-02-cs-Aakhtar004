@@ -27,13 +27,18 @@ jobs:
     - name: Generate coverage Report
       run: |
         cd PrimeService
-        reportgenerator "-reports:./*/*/*/coverage.cobertura.xml" "-targetdir:Cobertura" -reporttypes:HTML
-        ls Cobertura
+        reportgenerator "-reports:./*/*/*/coverage.cobertura.xml" "-targetdir:Cobertura" -reporttypes:Html
+        # Verificar que se generó el archivo index.html
+        ls -la Cobertura/
+        # Si solo existe index.htm, crear index.html
+        if [ ! -f "Cobertura/index.html" ] && [ -f "Cobertura/index.htm" ]; then
+          cp Cobertura/index.htm Cobertura/index.html
+        fi
         
     - name: Deploy coverage report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: PrimeService/Cobertura
-        destination_dir: Cobertura
-        keep_files: true 
+        destination_dir: coverage
+        keep_files: false
