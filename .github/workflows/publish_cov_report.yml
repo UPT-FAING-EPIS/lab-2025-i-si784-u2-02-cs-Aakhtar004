@@ -1,10 +1,7 @@
-name: 3. Test unitarias y Reporte de Cobertura 
+name: Actividad - 3 | Test unitarias y Reporte de Cobertura 
 env:
-  DOTNET_VERSION: '8.0'
-on: 
-  push:
-    branches: [main]
-  workflow_dispatch:
+  DOTNET_VERSION: '8.0' # la versión de .NET
+on: push
 
 jobs:
   test-and-publish-coverage:
@@ -30,19 +27,13 @@ jobs:
     - name: Generate coverage Report
       run: |
         cd PrimeService
-        reportgenerator "-reports:./*/*/*/coverage.cobertura.xml" "-targetdir:coverage-report" "-reporttypes:Html"
-        # Verificar archivos generados
-        ls -la coverage-report/
-        # Asegurar que existe index.html
-        if [ ! -f "coverage-report/index.html" ] && [ -f "coverage-report/index.htm" ]; then
-          cp coverage-report/index.htm coverage-report/index.html
-        fi
+        reportgenerator "-reports:./*/*/*/coverage.cobertura.xml" "-targetdir:Cobertura" -reporttypes:HTML
+        ls Cobertura
         
     - name: Deploy coverage report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: PrimeService/coverage-report
-        destination_dir: docs 
-        keep_files: false
-        enable_jekyll: false
+        publish_dir: PrimeService/Cobertura
+        destination_dir: Cobertura
+        keep_files: true 
