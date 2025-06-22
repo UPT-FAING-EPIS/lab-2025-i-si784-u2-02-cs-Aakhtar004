@@ -1,4 +1,4 @@
-name: 4. Release NuGet Package
+name: 4.Release NuGet Package
 env:
   DOTNET_VERSION: '8.0'
 on: push
