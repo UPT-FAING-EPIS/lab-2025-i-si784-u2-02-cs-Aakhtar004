@@ -4,8 +4,6 @@ env:
   DOTNET_VERSION_TOOL: '6.0' 
 on: 
   push
-    
-
 
 jobs:
   build-and-deploy-docs:
@@ -77,11 +75,10 @@ jobs:
             "content": [
               {
                 "files": [
-                  "**/*.{md,yml}"
+                  "**/*.{md,yml,html}"
                 ],
                 "exclude": [
-                  "_site/**",
-                  "Cobertura/index.html"
+                  "_site/**"
                 ]
               }
             ],
@@ -89,6 +86,11 @@ jobs:
               {
                 "files": [
                   "images/**"
+                ]
+              },
+              {
+                "files": [
+                  "Cobertura/**"
                 ]
               }
             ],
@@ -126,7 +128,7 @@ jobs:
 
         # This is the **HOMEPAGE**.
 
-        ## [Pruebas HTML - Cobertura](Cobertura/index.html)
+        ## [Pruebas HTML – Cobertura](./Cobertura/index.html)
 
         ## [Diagrama de Clases](disenio.md)
 
