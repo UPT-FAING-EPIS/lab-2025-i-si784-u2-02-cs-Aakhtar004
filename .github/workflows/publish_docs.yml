@@ -135,10 +135,12 @@ jobs:
       run: |
         docfx metadata docfx.json
         docfx build
-
-    - name: Publicar en GitHub Pages
+    
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: PrimeService/_site
-        keep_files: true
+        publish_branch: gh-pages
+        destination_dir: docs
+        keep_files: false
